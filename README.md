@@ -1,2 +1,4 @@
 # twitna
-script I use with a Twitter bot
+A script I use for a Twitter bot
+
+For this script I used [etnawrapper](https://github.com/tbobm/etnawrapper) by Théo "Bob" Massard.
