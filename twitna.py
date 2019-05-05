@@ -27,7 +27,7 @@ def grab_latests_messages(data):
         with open(message_id, 'r') as file :
                 current_id = file.readline()
 
-        for i in range(0, 8):
+        for i in range(0, len(data)):
                 if current_id != str(data[i]["id"]): # + "\n" :
                         tweet_message(data[i]["message"])
                         time.sleep(1)
