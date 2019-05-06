@@ -37,9 +37,11 @@ def grab_latests_messages(data):
 		return 0
 
 	for i in range(0, len(data)):
-		if current_id != str(data[i]["id"]):
-			print("tweet : %s" % data[i]["message"])
-			tweet_message(data[i]["message"])
+		if current_id != str(data[i]["id"]): # + "\n" :
+			# check if current message and precedent message are not the
+			# or Twitter will refuse it
+			if data[i]["message"] != data[i+1]["message"] :
+				tweet_message(data[i]["message"])
 			time.sleep(1)
 		else:
 			break
@@ -64,7 +66,6 @@ if __name__ == '__main__':
 	with open("file.json", 'w') as file :
 		file.write(json.dumps(wrapper.get_notifications(), indent=4))
 
-	# read json file
 	with open("file.json", 'r') as f:
 		json_data = json.load(f)
 
