@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import time
+import datetime
+import configparser
+from twython import Twython
+from etnawrapper import EtnaWrapper
+
 def tweet_message(etna_message, timestamp):
 	CONSUMER_KEY = ''
 	CONSUMER_SECRET = ''
