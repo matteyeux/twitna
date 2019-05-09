@@ -1,25 +1,19 @@
-#!/usr/bin/env python3
-import os
-import sys
-import json
-import time
-import datetime
-import configparser
-from twython import Twython
-from etnawrapper import EtnaWrapper
-
-def tweet_message(etna_message):
+def tweet_message(etna_message, timestamp):
 	CONSUMER_KEY = ''
 	CONSUMER_SECRET = ''
 	ACCESS_KEY = ''
 	ACCESS_SECRET = ''
 
-	# tweet
-	tweet = "@user " + etna_message
+	now = str(datetime.datetime.now())
+	now = now.split('.')[0]
+	now = now.replace("T", " ")
 
+	# tweet
+	tweet = "@user " + now + " : " + etna_message
 	api = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 	api.update_status(status=tweet)
+	#print(tweet.encode('utf-8').strip())
 
 def grab_latests_messages(data):
 	message_id = "message_id.txt"
@@ -37,11 +31,9 @@ def grab_latests_messages(data):
 		return 0
 
 	for i in range(0, len(data)):
-		if current_id != str(data[i]["id"]): # + "\n" :
-			# check if current message and precedent message are not the
-			# or Twitter will refuse it
-			if data[i]["message"] != data[i+1]["message"] :
-				tweet_message(data[i]["message"])
+		if current_id != str(data[i]["id"]) :
+			# tweet message and time from json file
+			tweet_message(data[i]["message"], data[i]["start"])
 			time.sleep(1)
 		else:
 			break
@@ -80,4 +72,3 @@ if __name__ == '__main__':
 			log.write(now + " : " + str(json_data[i]["message"].encode('utf-8')) + "\n")
 
 	os.remove("file.json")
-
